@@ -112,7 +112,7 @@ const items = [
     {
         id: 3,
         slug: 'divine-sword-of-archangel',
-        realImageUrl: 'https://mu.lv/img/item/w266bmd.webp?13801',
+        realImageUrl: './items/divine-sword-of-arcangel.png',
         nombre: 'Divine Sword of Archangel',
         category: 'Armas y Escudo',
         race: 'Lord Emperor',
