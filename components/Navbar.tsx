@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
-  const [activeTab, setActiveTab] = useState('Inicio');
+  const pathname = usePathname();
 
   const links = [
     { name: 'Inicio', href: '/' },
@@ -12,6 +12,9 @@ export default function Navbar() {
     { name: 'Rankings', href: '/rankings' },
     { name: 'Market place', href: '/marketplace' },
   ];
+
+  const activeTab =
+    links.find((link) => link.href === pathname)?.name ?? 'Inicio';
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-black/60 backdrop-blur-md border-b border-white/10 px-6 py-4 flex items-center justify-between text-white font-sans">
@@ -29,7 +32,6 @@ export default function Navbar() {
           <a
             key={link.name}
             href={link.href}
-            onClick={() => setActiveTab(link.name)}
             className="relative px-4 py-2 text-sm font-medium tracking-wide uppercase transition-colors duration-300 hover:text-amber-400"
           >
             {link.name}

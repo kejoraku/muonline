@@ -1,6 +1,7 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const marketplaceSlides = [
@@ -73,16 +74,35 @@ const items = [
   },
 ];
 
+const emptySlots = Array.from({ length: 24 }, (_, index) => index);
+
 export default function Marketplace() {
+  const router = useRouter();
   const [current, setCurrent] = useState(0);
+  const [showVault, setShowVault] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % marketplaceSlides.length);
     }, 4000);
 
+    const storedUser = localStorage.getItem('mu_user');
+    setIsLoggedIn(Boolean(storedUser));
+
     return () => clearInterval(timer);
   }, []);
+
+  const handlePublishClick = () => {
+    const storedUser = localStorage.getItem('mu_user');
+
+    if (!storedUser) {
+      router.push('/login?redirect=/marketplace');
+      return;
+    }
+
+    setShowVault(true);
+  };
 
   return (
     <div className="relative min-h-screen w-full bg-black text-white pt-28 pb-12 px-4 font-sans overflow-hidden">
@@ -103,8 +123,10 @@ export default function Marketplace() {
           </div>
 
           <motion.button
+            type="button"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={handlePublishClick}
             className="mt-4 md:mt-0 bg-transparent border border-amber-500/50 hover:bg-amber-500 hover:text-black text-amber-500 px-5 py-2.5 rounded-md font-bold text-xs uppercase tracking-wider transition-all"
           >
             Publicar un Ítem
@@ -219,6 +241,56 @@ export default function Marketplace() {
           ))}
         </div>
       </div>
+
+      <AnimatePresence>
+        {showVault && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm px-4"
+          >
+            <motion.div
+              initial={{ scale: 0.96, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.96, opacity: 0 }}
+              className="w-full max-w-3xl rounded-2xl border border-amber-500/40 bg-[#0b0b0d] p-4 shadow-[0_0_40px_rgba(245,158,11,0.2)]"
+            >
+              <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-3">
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-amber-400">Baúl del personaje</p>
+                  <h3 className="mt-2 text-2xl font-black uppercase tracking-wider text-white">Inventario</h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowVault(false)}
+                  className="rounded-md border border-white/10 bg-white/5 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gray-300 hover:text-white"
+                >
+                  Cerrar
+                </button>
+              </div>
+
+              <div className="rounded-xl border border-red-500/30 bg-black/50 p-3">
+                <div className="grid grid-cols-6 gap-2 rounded-md border border-red-500/20 bg-[#0e0e10] p-3">
+                  {emptySlots.map((slot) => (
+                    <div
+                      key={slot}
+                      className="flex h-16 items-center justify-center rounded-md border border-dashed border-red-500/30 bg-[#121214] text-[10px] font-bold uppercase tracking-wider text-red-500/40"
+                    >
+                      {slot + 1}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-5 flex items-center justify-between rounded-lg border border-white/10 bg-zinc-950/70 px-4 py-3 text-xs text-gray-400">
+                <span>Estado: <strong className="text-amber-300">Vacío</strong></span>
+                <span>Usuario: <strong className="text-white">raniero</strong></span>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
