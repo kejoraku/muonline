@@ -1,0 +1,15 @@
+{
+  "pages": {
+    "/_app": []
+  },
+  "devFiles": [],
+  "polyfillFiles": [],
+  "lowPriorityFiles": [
+    "static/KcAkOkruOkOVOde-aG-7U/_buildManifest.js",
+    "static/KcAkOkruOkOVOde-aG-7U/_ssgManifest.js",
+    "static/KcAkOkruOkOVOde-aG-7U/_clientMiddlewareManifest.js"
+  ],
+  "rootMainFiles": [],
+  "rootMainFilesTree": {},
+  "pagesChunkGroupBootstrapParams": {}
+}

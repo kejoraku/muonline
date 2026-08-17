@@ -6,11 +6,9 @@ import { motion } from 'framer-motion';
 export default function Login() {
   return (
     <div className="relative min-h-screen w-full bg-black text-white flex items-center justify-center px-4 font-sans overflow-hidden">
-      
-      {/* Luz mística de fondo */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-orange-600/10 blur-[130px] rounded-full pointer-events-none" />
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -24,7 +22,11 @@ export default function Login() {
         <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
           <div>
             <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-2">Usuario</label>
-            <input type="text" placeholder="Tu ID de juego" className="w-full bg-zinc-900 border border-white/5 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-orange-500/50 transition-colors" />
+            <input
+              type="text"
+              placeholder="Tu ID de juego"
+              className="w-full bg-zinc-900 border border-white/5 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-orange-500/50 transition-colors"
+            />
           </div>
 
           <div>
@@ -32,7 +34,19 @@ export default function Login() {
               <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-400">Contraseña</label>
               <a href="#" className="text-[10px] text-gray-500 hover:text-white transition-colors">¿La olvidaste?</a>
             </div>
-            <input type="password" placeholder="••••••••" className="w-full bg-zinc-900 border border-white/5 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-orange-500/50 transition-colors" />
+            <input
+              type="password"
+              placeholder="••••••••"
+              className="w-full bg-zinc-900 border border-white/5 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-orange-500/50 transition-colors"
+            />
+          </div>
+
+          <div className="flex items-center justify-between text-[11px] text-gray-400">
+            <label className="flex items-center gap-2">
+              <input type="checkbox" className="h-3.5 w-3.5 accent-amber-500" />
+              Recordarme
+            </label>
+            <a href="/register" className="text-amber-400 hover:text-amber-300">Crear cuenta</a>
           </div>
 
           <div className="pt-2">
