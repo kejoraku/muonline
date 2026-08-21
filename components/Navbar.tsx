@@ -14,6 +14,11 @@ export default function Navbar() {
     { name: 'Rankings', href: '/rankings' },
     { name: 'Market place', href: '/marketplace' },
   ];
+  const mobileLinks = [
+    ...links,
+    { name: 'Register', href: '/register' },
+    { name: 'Log in', href: '/login' },
+  ];
 
   const activeTab =
     links.find((link) => link.href === pathname)?.name ?? 'Inicio';
@@ -51,11 +56,13 @@ export default function Navbar() {
       <button
         type="button"
         aria-expanded={menuOpen}
-        aria-label="Abrir menú de navegación"
+        aria-label={menuOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
         onClick={() => setMenuOpen((open) => !open)}
-        className="rounded-md border border-white/10 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-gray-300 hover:border-amber-500/50 hover:text-amber-300 md:hidden"
+        className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-md border border-white/10 text-gray-300 hover:border-amber-500/50 hover:text-amber-300 md:hidden"
       >
-        Menú
+        <span className={`h-0.5 w-5 bg-current transition-transform ${menuOpen ? 'translate-y-2 rotate-45' : ''}`} />
+        <span className={`h-0.5 w-5 bg-current transition-opacity ${menuOpen ? 'opacity-0' : ''}`} />
+        <span className={`h-0.5 w-5 bg-current transition-transform ${menuOpen ? '-translate-y-2 -rotate-45' : ''}`} />
       </button>
 
       <motion.div
@@ -82,7 +89,7 @@ export default function Navbar() {
 
       {menuOpen && (
         <div className="absolute left-3 right-3 top-full mt-2 flex flex-col gap-1 rounded-lg border border-white/10 bg-zinc-950/95 p-2 shadow-2xl md:hidden">
-          {links.map((link) => (
+          {mobileLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}

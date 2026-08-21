@@ -32,6 +32,7 @@ const marketplaceSlides = [
 ];
 
 const categoryTabs = [
+  'Todo',
   'Alas',
   'Armas y Escudo',
   'Casco',
@@ -80,7 +81,7 @@ const items = [
     auction: '12h',
     tiempoRestante: '12:25:04',
     destacado: true,
-    imagenColor: 'from-red-600 to-orange-500',
+    imagenColor: 'from-red-700 to-orange-500',
   },
   {
     id: 2,
@@ -97,7 +98,7 @@ const items = [
     auction: '6h',
     tiempoRestante: '06:14:20',
     destacado: true,
-    imagenColor: 'from-blue-600 to-indigo-500',
+    imagenColor: 'from-slate-900 to-blue-900',
   },
   {
     id: 3,
@@ -114,7 +115,7 @@ const items = [
     auction: '24h',
     tiempoRestante: '23:59:55',
     destacado: true,
-    imagenColor: 'from-amber-400 to-yellow-600',
+    imagenColor: 'from-zinc-900 to-amber-950',
   },
   {
     id: 4,
@@ -131,7 +132,7 @@ const items = [
     auction: '12h',
     tiempoRestante: '11:18:03',
     destacado: true,
-    imagenColor: 'from-zinc-700 to-zinc-900',
+    imagenColor: 'from-zinc-950 to-stone-800',
   },
   {
     id: 5,
@@ -269,7 +270,7 @@ export default function Marketplace() {
   const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showVault, setShowVault] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('Alas');
+  const [selectedCategory, setSelectedCategory] = useState('Todo');
   const [selectedRace, setSelectedRace] = useState('Blade Master');
   const [selectedPayment, setSelectedPayment] = useState('Jewel of Bless');
 
@@ -288,6 +289,8 @@ export default function Marketplace() {
 
   const filteredItems = useMemo(() => {
     return items.filter((item) => {
+      if (selectedCategory === 'Todo') return true;
+
       const sameCategory = item.category === selectedCategory;
       const sameRace = item.race === selectedRace || item.race === 'General';
       const isRaceRelevant = raceFilteredCategories.includes(selectedCategory);
@@ -407,9 +410,10 @@ export default function Marketplace() {
               <motion.div
                 key={item.id}
                 whileHover={{ y: -5 }}
-                className="rounded-2xl border-2 border-amber-400/80 bg-zinc-950/80 p-4 shadow-[0_0_25px_rgba(245,158,11,0.2)] ring-1 ring-amber-200/30"
+                className="relative overflow-hidden rounded-2xl border-2 border-amber-300 bg-gradient-to-b from-amber-950/80 via-zinc-950 to-black p-4 shadow-[0_0_28px_rgba(245,158,11,0.35)] ring-1 ring-amber-100/40"
               >
-                <div className={`relative mb-4 overflow-hidden rounded-xl bg-gradient-to-br ${item.imagenColor} p-3`}>
+                <div className="pointer-events-none absolute inset-1 rounded-xl border border-amber-400/30" />
+                <div className={`relative mb-4 overflow-hidden rounded-xl border border-amber-300/70 bg-gradient-to-br ${item.imagenColor} p-3 shadow-[inset_0_0_22px_rgba(251,191,36,0.35)]`}>
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.25),_transparent_60%)]" />
                   <div className="relative z-10 mb-2 flex items-center justify-between text-[9px] font-black uppercase tracking-wider">
                     <span className="rounded-full border border-white/10 bg-black/50 px-2 py-1 text-amber-300">
@@ -470,7 +474,7 @@ export default function Marketplace() {
                   type="button"
                   onClick={() => {
                     setSelectedCategory(category);
-                    if (category === 'Mascotas' || category === 'Anillos' || category === 'Pendientes') {
+                    if (category === 'Todo' || category === 'Mascotas' || category === 'Anillos' || category === 'Pendientes') {
                       setSelectedRace('General');
                     } else if (selectedRace === 'General') {
                       setSelectedRace('Blade Master');
