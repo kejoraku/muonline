@@ -320,6 +320,12 @@ export default function Marketplace() {
     setShowVault(true);
   };
 
+  const preserveScroll = (action: () => void) => {
+    const scrollPosition = window.scrollY;
+    action();
+    requestAnimationFrame(() => window.scrollTo({ top: scrollPosition, behavior: 'auto' }));
+  };
+
   const featuredItems = items.filter((item) => item.destacado).slice(0, 4);
   const needsRaceFilter = raceFilteredCategories.includes(selectedCategory);
 
@@ -412,8 +418,9 @@ export default function Marketplace() {
                 whileHover={{ y: -5 }}
                 className="relative overflow-hidden rounded-2xl border-2 border-amber-300 bg-gradient-to-b from-amber-950/80 via-zinc-950 to-black p-4 shadow-[0_0_28px_rgba(245,158,11,0.35)] ring-1 ring-amber-100/40"
               >
-                <div className="pointer-events-none absolute inset-1 rounded-xl border border-amber-400/30" />
-                <div className={`relative mb-4 overflow-hidden rounded-xl border border-amber-300/70 bg-gradient-to-br ${item.imagenColor} p-3 shadow-[inset_0_0_22px_rgba(251,191,36,0.35)]`}>
+                <div className="pointer-events-none absolute inset-1 rounded-xl border border-amber-200/70 shadow-[inset_0_0_18px_rgba(251,191,36,0.3)]" />
+                <div className={`relative mb-4 overflow-hidden rounded-xl border-2 border-amber-300 bg-gradient-to-br ${item.imagenColor} p-3 shadow-[inset_0_0_32px_rgba(251,191,36,0.55),0_0_16px_rgba(245,158,11,0.25)]`}>
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-300/25 via-transparent to-amber-950/45" />
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.25),_transparent_60%)]" />
                   <div className="relative z-10 mb-2 flex items-center justify-between text-[9px] font-black uppercase tracking-wider">
                     <span className="rounded-full border border-white/10 bg-black/50 px-2 py-1 text-amber-300">
@@ -473,12 +480,14 @@ export default function Marketplace() {
                   key={category}
                   type="button"
                   onClick={() => {
-                    setSelectedCategory(category);
-                    if (category === 'Todo' || category === 'Mascotas' || category === 'Anillos' || category === 'Pendientes') {
-                      setSelectedRace('General');
-                    } else if (selectedRace === 'General') {
-                      setSelectedRace('Blade Master');
-                    }
+                    preserveScroll(() => {
+                      setSelectedCategory(category);
+                      if (category === 'Todo' || category === 'Mascotas' || category === 'Anillos' || category === 'Pendientes') {
+                        setSelectedRace('General');
+                      } else if (selectedRace === 'General') {
+                        setSelectedRace('Blade Master');
+                      }
+                    });
                   }}
                   className={`rounded-lg border px-3 py-2 text-[10px] font-black uppercase tracking-wider transition-all ${
                     selectedCategory === category
@@ -502,7 +511,7 @@ export default function Marketplace() {
                       <button
                         key={race}
                         type="button"
-                        onClick={() => setSelectedRace(race)}
+                        onClick={() => preserveScroll(() => setSelectedRace(race))}
                         className={`rounded-lg border px-3 py-2 text-[10px] font-bold uppercase tracking-wider transition-all ${
                           selectedRace === race
                             ? 'border-amber-500/50 bg-amber-500/10 text-amber-300'
@@ -576,6 +585,8 @@ export default function Marketplace() {
                     <span>{item.race}</span>
                     <span>{item.vendedor}</span>
                   </div>
+
+                  <h3 className="text-lg font-black text-white">{item.nombre}</h3>
 
                   <div className="flex flex-wrap gap-1.5">
                     {item.opciones.map((opt) => (

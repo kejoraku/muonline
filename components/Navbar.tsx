@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -22,6 +22,20 @@ export default function Navbar() {
 
   const activeTab =
     links.find((link) => link.href === pathname)?.name ?? 'Inicio';
+
+  useEffect(() => {
+    const pageNames: Record<string, string> = {
+      '/': 'Inicio',
+      '/descargas': 'Descargas',
+      '/rankings': 'Rankings',
+      '/marketplace': 'Market Place',
+      '/register': 'Register',
+      '/login': 'Log In',
+    };
+
+    const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+    document.title = `Mu Isekai | ${pageNames[currentPath] ?? 'Inicio'}`;
+  }, [pathname]);
 
   return (
     <nav className="fixed left-0 top-0 z-50 flex w-full items-center justify-between border-b border-white/10 bg-black/60 px-3 py-3 font-sans text-white backdrop-blur-md sm:px-6 sm:py-4">

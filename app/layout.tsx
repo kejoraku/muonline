@@ -1,6 +1,14 @@
 // app/layout.tsx
+import type { Metadata } from 'next';
 import './globals.css'; // Estilos globales de Tailwind
 import Navbar from '@/components/Navbar';
+
+export const metadata: Metadata = {
+  title: 'Mu Isekai | Inicio',
+  icons: {
+    icon: '/items/logo.png',
+  },
+};
 
 export default function RootLayout({
   children,
