@@ -67,7 +67,7 @@ export default function Home() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-5xl sm:text-7xl font-black tracking-tight text-white mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white via-gray-200 to-gray-500 drop-shadow-[0_5px_15px_rgba(0,0,0,0.8)]"
+          className="mb-6 bg-gradient-to-b from-white via-gray-200 to-gray-500 bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-7xl"
         >
           BIENVENIDO A <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-400 via-orange-500 to-yellow-200">MU ONLINE</span>
         </motion.h1>

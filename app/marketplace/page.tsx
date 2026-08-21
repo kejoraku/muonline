@@ -68,7 +68,7 @@ const items = [
   {
     id: 1,
     slug: 'w266bmd',
-    realImageUrl: 'https://mu.lv/img/item/w266bmd.webp?13801',
+    realImageUrl: '/items/wings-of-dragon.png',
     nombre: 'Wings of Dragon',
     category: 'Alas',
     race: 'Blade Master',
@@ -85,7 +85,7 @@ const items = [
   {
     id: 2,
     slug: 'r8b3emi',
-    realImageUrl: 'https://mu.lv/img/item/r8b3emi.webp?13801',
+    realImageUrl: '/items/grand-soul-staff.png',
     nombre: 'Dragon Soul Staff',
     category: 'Armas y Escudo',
     race: 'Soul Master',
@@ -102,7 +102,7 @@ const items = [
   {
     id: 3,
     slug: 'divine-sword-of-archangel',
-    realImageUrl: './items/divine-sword-of-arcangel.png',
+    realImageUrl: '/items/divine-sword-of-arcangel.png',
     nombre: 'Divine Sword of Archangel',
     category: 'Armas y Escudo',
     race: 'Lord Emperor',
@@ -119,6 +119,7 @@ const items = [
   {
     id: 4,
     slug: 'black-dragon-armor',
+    realImageUrl: '/items/black-dragon-armor.png',
     nombre: 'Black Dragon Armor',
     category: 'Pecho',
     race: 'Duel Master',
@@ -322,7 +323,7 @@ export default function Marketplace() {
   const getItemImage = (item: (typeof items)[number]) => item.realImageUrl || `/items/${item.slug}.png`;
 
   return (
-    <div className="relative min-h-screen w-full bg-black text-white pt-28 pb-12 px-4 font-sans overflow-hidden">
+    <div className="relative min-h-screen w-full overflow-hidden bg-black px-3 pt-24 pb-12 font-sans text-white sm:px-4 sm:pt-28">
       <div className="absolute top-1/3 left-0 w-[400px] h-[400px] bg-blue-600/5 blur-[130px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-amber-600/5 blur-[130px] rounded-full pointer-events-none" />
 
@@ -332,7 +333,7 @@ export default function Marketplace() {
             <motion.h1
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
-              className="text-4xl font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 uppercase mb-2"
+              className="mb-2 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-3xl font-black uppercase tracking-wider text-transparent sm:text-4xl"
             >
               Mercado de Ítems
             </motion.h1>
@@ -401,12 +402,12 @@ export default function Marketplace() {
             <span className="text-[10px] uppercase tracking-wider text-gray-500">Top 4</span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4">
             {featuredItems.map((item) => (
               <motion.div
                 key={item.id}
                 whileHover={{ y: -5 }}
-                className="rounded-2xl border border-amber-500/20 bg-zinc-950/80 p-4 shadow-[0_0_25px_rgba(245,158,11,0.08)]"
+                className="rounded-2xl border-2 border-amber-400/80 bg-zinc-950/80 p-4 shadow-[0_0_25px_rgba(245,158,11,0.2)] ring-1 ring-amber-200/30"
               >
                 <div className={`relative mb-4 overflow-hidden rounded-xl bg-gradient-to-br ${item.imagenColor} p-3`}>
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.25),_transparent_60%)]" />
@@ -540,7 +541,7 @@ export default function Marketplace() {
             <span className="text-[10px] uppercase tracking-wider text-gray-500">{filteredItems.length} resultados</span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4">
             {filteredItems.map((item) => (
               <motion.div
                 key={item.id}
@@ -623,7 +624,7 @@ export default function Marketplace() {
               initial={{ scale: 0.96, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.96, opacity: 0 }}
-              className="w-full max-w-3xl rounded-2xl border border-amber-500/40 bg-[#0b0b0d] p-4 shadow-[0_0_40px_rgba(245,158,11,0.2)]"
+              className="w-full max-w-3xl rounded-2xl border border-amber-500/40 bg-[#0b0b0d] p-3 shadow-[0_0_40px_rgba(245,158,11,0.2)] sm:p-4"
             >
               <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-3">
                 <div>
@@ -640,7 +641,7 @@ export default function Marketplace() {
               </div>
 
               <div className="rounded-xl border border-red-500/30 bg-black/50 p-3">
-                <div className="grid grid-cols-6 gap-2 rounded-md border border-red-500/20 bg-[#0e0e10] p-3">
+                <div className="grid grid-cols-3 gap-2 rounded-md border border-red-500/20 bg-[#0e0e10] p-2 sm:grid-cols-6 sm:p-3">
                   {emptySlots.map((slot) => (
                     <div
                       key={slot}

@@ -2,9 +2,11 @@
 
 import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const links = [
     { name: 'Inicio', href: '/' },
@@ -17,12 +19,12 @@ export default function Navbar() {
     links.find((link) => link.href === pathname)?.name ?? 'Inicio';
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-black/60 backdrop-blur-md border-b border-white/10 px-6 py-4 flex items-center justify-between text-white font-sans">
+    <nav className="fixed left-0 top-0 z-50 flex w-full items-center justify-between border-b border-white/10 bg-black/60 px-3 py-3 font-sans text-white backdrop-blur-md sm:px-6 sm:py-4">
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-2xl font-black tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-amber-400 via-orange-500 to-yellow-200 drop-shadow-[0_2px_10px_rgba(245,158,11,0.3)] select-none cursor-pointer"
+        className="select-none cursor-pointer bg-gradient-to-r from-amber-400 via-orange-500 to-yellow-200 bg-clip-text text-lg font-black tracking-widest text-transparent drop-shadow-[0_2px_10px_rgba(245,158,11,0.3)] sm:text-2xl"
       >
         <a href="/">MU ONLINE</a>
       </motion.div>
@@ -46,27 +48,54 @@ export default function Navbar() {
         ))}
       </div>
 
+      <button
+        type="button"
+        aria-expanded={menuOpen}
+        aria-label="Abrir menú de navegación"
+        onClick={() => setMenuOpen((open) => !open)}
+        className="rounded-md border border-white/10 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-gray-300 hover:border-amber-500/50 hover:text-amber-300 md:hidden"
+      >
+        Menú
+      </button>
+
       <motion.div
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
-        className="flex items-center space-x-4"
+        className="flex items-center space-x-2 sm:space-x-4"
       >
-        <a href="/register" className="text-sm font-medium uppercase tracking-wide text-gray-300 hover:text-white transition-colors">
+        <a href="/register" className="hidden text-sm font-medium uppercase tracking-wide text-gray-300 transition-colors hover:text-white sm:block">
           Register
         </a>
 
-        <span className="text-white/20 font-light">|</span>
+        <span className="hidden font-light text-white/20 sm:block">|</span>
 
         <motion.a
           whileHover={{ scale: 1.05, boxShadow: '0px 0px 15px rgba(245, 158, 11, 0.5)' }}
           whileTap={{ scale: 0.95 }}
           href="/login"
-          className="bg-gradient-to-r from-amber-500 to-orange-600 px-5 py-2 rounded-md text-sm font-bold uppercase tracking-wider text-black border border-amber-400/30 transition-all"
+          className="rounded-md border border-amber-400/30 bg-gradient-to-r from-amber-500 to-orange-600 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-black transition-all sm:px-5 sm:text-sm"
         >
           Log in
         </motion.a>
       </motion.div>
+
+      {menuOpen && (
+        <div className="absolute left-3 right-3 top-full mt-2 flex flex-col gap-1 rounded-lg border border-white/10 bg-zinc-950/95 p-2 shadow-2xl md:hidden">
+          {links.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              className={`rounded-md px-3 py-3 text-xs font-bold uppercase tracking-wider ${
+                activeTab === link.name ? 'bg-amber-500/10 text-amber-300' : 'text-gray-300'
+              }`}
+            >
+              {link.name}
+            </a>
+          ))}
+        </div>
+      )}
     </nav>
   );
 }
